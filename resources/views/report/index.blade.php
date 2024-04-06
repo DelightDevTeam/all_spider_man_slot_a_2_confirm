@@ -89,30 +89,24 @@
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light bg-gradient-info  ">
-          <tr>
-            <th rowspan="2" class="text-white">PlayerName</th>
-            <th rowspan="2" class="text-white">Total Bet</th>
-            <th rowspan="2" class="text-white">Total Valid</th>
-            <th colspan="3" class="text-white">Member</th>
-            <th colspan="3" class="text-white">Agent</th>
-            <th rowspan="2" class="text-white">Win/Lose</th>
-            <th rowspan="2" class="text-white">Action</th>
-          </tr>
-          <tr>
+            <th class="text-white">PlayerName</th>
+            <th class="text-white">Total Bet</th>
+            <th class="text-white">Total Valid</th>
             <th class="text-white">Win/Lose</th>
-            <th class="text-white">Com</th>
-            <th class="text-white">Total</th>
-            <th class="text-white">Win/Lose</th>
-            <th class="text-white">Com</th>
-            <th class="text-white">Total</th>
-          </tr>
+            <th class="text-white">Action</th>
         </thead>
-        <tbody>\
-          <tr>
-            <td>
-
-            </td>
+        <tbody>
+          @foreach ($report as $rep)
+            
+          <tr> 
+            <td>{{ $rep->user_name}}</td>
+            <td>{{ $rep->total_bet_amount}}</td>
+            <td>{{ $rep->total_valid_amount}}</td>
+            <td>{{ $rep->transaction_amount}}</td>
+            <td><a href="{{route('admin.report.show,$rep->user_id')}}" class="btn btn-sm btn-info">Detail</a></td>
           </tr>
+          @endforeach
+
         </tbody>
       </table>
     </div>

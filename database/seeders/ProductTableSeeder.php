@@ -21,7 +21,7 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1003',
                 'name'  => 'All Bet',
-                'order' => 2,
+                'order' => 31,
             ],
             [
                 'code'  => '1004',
@@ -166,7 +166,7 @@ class ProductTableSeeder extends Seeder
             [
                 'code'  => '1091',
                 'name'  => 'Jili',
-                'order' => 31,
+                'order' => 2,
             ],
         ];
 
