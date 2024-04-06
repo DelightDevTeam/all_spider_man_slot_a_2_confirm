@@ -103,7 +103,7 @@
             <td>{{ $rep->total_bet_amount}}</td>
             <td>{{ $rep->total_valid_amount}}</td>
             <td>{{ $rep->total_transaction_amount}}</td>
-            <td><a href="{{route('admin.report.show,$rep->user_id')}}" class="btn btn-sm btn-info">Detail</a></td>
+            <td><a href="{{route('admin.report.show',$rep->user_id)}}" class="btn btn-sm btn-info">Detail</a></td>
           </tr>
           @endforeach
 
