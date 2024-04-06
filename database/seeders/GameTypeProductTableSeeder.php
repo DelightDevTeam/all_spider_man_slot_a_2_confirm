@@ -117,12 +117,6 @@ class GameTypeProductTableSeeder extends Seeder
                 'rate' => '1.0000'
             ],
             [
-                'product_id' => 13,
-                'game_type_id' => 2,
-                'image' => 'yggdrasil.png',
-                'rate' => '1.0000'
-            ],
-            [
                 'product_id' => 14,
                 'game_type_id' => 2,
                 'image' => 'vivo_gaming.jpeg',
@@ -234,12 +228,6 @@ class GameTypeProductTableSeeder extends Seeder
                 'product_id' => 30,
                 'game_type_id' => 1,
                 'image' => 'simple_play.jpeg',
-                'rate' => '1000.0000'
-            ],
-            [
-                'product_id' => 30,
-                'game_type_id' => 4,
-                'image' => 'simple_play_fishing.jpeg',
                 'rate' => '1000.0000'
             ],
             [
