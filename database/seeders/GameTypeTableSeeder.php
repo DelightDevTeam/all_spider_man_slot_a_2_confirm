@@ -15,6 +15,7 @@ class GameTypeTableSeeder extends Seeder
         $data = [
             [
                 'name'  => 'Slot',
+                'name_mm' => 'စလော့',
                 'code'  => '1',
                 'order' => '1',
                 'status' => 1,
@@ -22,6 +23,7 @@ class GameTypeTableSeeder extends Seeder
             ],
             [
                 'name'  => 'Live Casino',
+                'name_mm' => 'တိုက်ရိုက်ကာစီနို',
                 'code'  => '2',
                 'order' => '2',
                 'status' => 1,
@@ -29,6 +31,7 @@ class GameTypeTableSeeder extends Seeder
             ],
             [
                 'name'  => 'Sport Book',
+                'name_mm' => 'အားကစား',
                 'code'  => '3',
                 'order' => '3',
                 'status' => 1,
@@ -36,6 +39,7 @@ class GameTypeTableSeeder extends Seeder
             ],
             [
                 'name' => 'Fishing',
+                'name_mm' => 'ငါးဖမ်းခြင်း',
                 'code' => '8',
                 'order' => '4',
                 'status' => 1,

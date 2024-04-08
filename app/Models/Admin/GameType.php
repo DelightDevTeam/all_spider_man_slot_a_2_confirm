@@ -9,7 +9,7 @@ class GameType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','code','order','img'];
+    protected $fillable = ['name','code','order','img', 'name_mm'];
     protected  $appends = ['image', 'img_url'];
 
     public function products()
