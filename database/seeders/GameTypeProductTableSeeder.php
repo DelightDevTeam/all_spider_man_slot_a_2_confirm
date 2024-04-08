@@ -235,6 +235,12 @@ class GameTypeProductTableSeeder extends Seeder
                 'game_type_id' => 1,
                 'image' => 'jili.png',
                 'rate' => '1.0000'
+            ],
+            [
+                'product_id' => 32,
+                'game_type_id' => 1,
+                'image' => 'playstar.jpeg',
+                'rate' => '1.0000'
             ]
             ];
 

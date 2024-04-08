@@ -168,6 +168,11 @@ class ProductTableSeeder extends Seeder
                 'name'  => 'Jili',
                 'order' => 2,
             ],
+            [
+                'code'  => '1050',
+                'name'  => 'PlayStar',
+                'order' => 32,
+            ],
         ];
 
         Product ::insert($data);
