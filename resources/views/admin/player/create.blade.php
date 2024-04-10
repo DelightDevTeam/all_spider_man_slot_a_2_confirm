@@ -192,7 +192,7 @@
 <script>
   var errorMessage = @json(session('error'));
   var successMessage = @json(session('success'));
-  var url = 'https://maxwinmyanmar.com/login';
+  var url = 'https://spidermanslotmm.com/login';
   var name = @json(session('username'));
   var pw = @json(session('password'));
 

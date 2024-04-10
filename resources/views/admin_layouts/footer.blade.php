@@ -7,7 +7,7 @@
                   document.write(new Date().getFullYear())
                 </script>,
                 by
-                <a href="https://maxwinmyanmar.com" target="_blank" class="font-weight-bold" target="_blank">SpiderMan Slot</a>
+                <a href="https://spidermanslotmm.com/" target="_blank" class="font-weight-bold" target="_blank">SpiderMan Slot</a>
               </div>
             </div>
             {{-- <div class="col-lg-6">
