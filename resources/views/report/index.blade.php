@@ -22,10 +22,12 @@
   #search {
     margin-top: 40px;
   }
+
   #product {
     background-color: #CCDDEB;
     color: #e91e63;
   }
+
   #clear {
     margin-top: 40px;
   }
@@ -50,7 +52,7 @@
         </div>
       </div>
       <div class="container">
-        <form action="{{route('admin.report.index')}}" method="GET">
+        <form action="" >
           <div class="row">
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
@@ -71,14 +73,14 @@
               </div>
             </div>
             <div class="col-md-3">
-              <button type="submit" class="btn btn-sm btn-primary" id="search">Search</button>
+              <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
             <div class="col">
               <label for="" class="font-weight-bold">Game Type</label>
               <br>
-              <button type="button" class="btn btn-sm btn-primary">All</button>
+              <button type="button" class="btn btn-sm game-type-btn btn-primary">All</button>
               @foreach ($gameTypes as $type)
-                <button type="button" class="btn btn-sm" id="product">{{$type->name}}</button>
+              <button type="button" class="btn btn-sm game-type-btn" data-id="{{ $type->id }}">{{ $type->name }}</button>
               @endforeach
             </div>
         </form>
@@ -86,6 +88,7 @@
     </div>
 
 
+   
     <div class="table-responsive">
       <table class="table table-flush" id="users-search">
         <thead class="thead-light bg-gradient-info  ">
@@ -117,12 +120,42 @@
 @section('scripts')
 <script src="{{ asset('admin_app/assets/js/plugins/datatables.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-{{-- <script>
-    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-      searchable: true,
-      fixedHeight: true
+<script>
+  $(document).ready(function() {
+    $(document).on('click', '#search', function(event) {
+      event.preventDefault();
+      const fromDate = $('#fromDate').val();
+      const toDate = $('#toDate').val();
+      const playerName = $('#player_name').val();
+      const gameTypeId = $('.game-type-btn.active').data('id');
+      $('.game-type-btn').removeClass('btn_primary');
+      $('.game-type-btn[data-id="' + gameTypeId + '"]').addClass('btn_primary');
+      $.ajax({
+        url: "{{ route('admin.report.index') }}",
+        type: "GET",
+        data: {
+          fromDate: fromDate,
+          toDate: toDate,
+          playerName: playerName,
+          gameTypeId: gameTypeId,
+        },
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        },
+      });
     });
-  </script> --}}
+
+    $('.game-type-btn').on('click', function() {
+      $('.game-type-btn').removeClass('btn-primary');
+      $(this).addClass('btn-primary active');
+      var gameTypeId = $(this).data('id');
+    });
+
+  });
+</script>
 <script>
   if (document.getElementById('users-search')) {
     const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
