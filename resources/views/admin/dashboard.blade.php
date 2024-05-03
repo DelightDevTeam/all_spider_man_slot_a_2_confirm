@@ -9,7 +9,7 @@
                             <div class="col text-start">
                                 <p class="text-sm mb-1 text-capitalize font-weight-bold">Provider Balance</p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{ number_format($provider_balance, 2) }}MMK
+                                    {{-- {{ number_format($provider_balance, 2) }}MMK --}}
                                 </h5>
                             </div>
                         </div>
