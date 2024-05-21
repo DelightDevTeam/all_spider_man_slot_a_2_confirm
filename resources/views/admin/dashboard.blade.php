@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
+        {{-- <div class="col-sm-3">
             <div class="card">
                 <div class="card-body p-3 position-relative">
                     <div class="row">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     </div>
     @can('admin_access')
