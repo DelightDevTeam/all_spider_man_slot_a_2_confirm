@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-sm-3">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body p-3 position-relative">
                     <div class="row">
@@ -79,10 +79,10 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
     </div>
-    @can('admin_access')
+    {{-- @can('admin_access')
         <div class="row gx-4 mt-4">
             <div class="col-md-6">
                 <div class="card">
@@ -105,7 +105,8 @@
                     </form>
                 </div>
             </div>
-        @endcan
+        </div>
+        @endcan --}}
     @endsection
     @section('scripts')
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
