@@ -75,14 +75,7 @@
             <div class="col-md-3">
               <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
-            <div class="col">
-              <label for="" class="font-weight-bold">Game Type</label>
-              <br>
-              <button type="button" class="btn btn-sm game-type-btn btn-primary">All</button>
-              @foreach ($gameTypes as $type)
-              <button type="button" class="btn btn-sm game-type-btn" data-id="{{ $type->id }}">{{ $type->name }}</button>
-              @endforeach
-            </div>
+            
         </form>
       </div>
     </div>

@@ -57,7 +57,7 @@ class ReportController extends Controller
         $report = $query->get();
 
         $gameTypes = GameType::all();
-
+ 
         return view('report.index', compact('report', 'gameTypes'));
     }
 
