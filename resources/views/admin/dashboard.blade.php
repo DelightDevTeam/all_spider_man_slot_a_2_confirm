@@ -24,7 +24,7 @@
                         <div class="col text-start">
                             <p class="text-sm mb-1 text-capitalize font-weight-bold">Balance</p>
                             <h5 class="font-weight-bolder mb-0">
-                                {{ number_format(auth()->user()->balanceFloat, 2) }}MMK
+                                {{ number_format(auth()->user()->balanceFloat) }}MMK
                             </h5>
                         </div>
                     </div>
