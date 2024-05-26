@@ -11,12 +11,32 @@
     appearance: none;
     /* For some browsers */
   }
+
+  .active-button {
+    background-color: #e91e63;
+    /* or any color you prefer */
+    color: white;
+    /* optional: change text color if needed */
+  }
+
+  #search {
+    margin-top: 40px;
+  }
+
+  #product {
+    background-color: #CCDDEB;
+    color: #e91e63;
+  }
+
+  #clear {
+    margin-top: 40px;
+  }
 </style>
 @endsection
 @section('content')
 <div class="row mt-4">
   <div class="col-12">
-  <div class="card">
+    <div class="card">
       <!-- Card header -->
       <div class="card-header pb-0">
         <div class="d-lg-flex">
@@ -32,7 +52,7 @@
         </div>
       </div>
       <div class="container">
-        <form action="{{route('admin.report.show',$userId)}}" method="GET">
+        <form action="" >
           <div class="row">
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
@@ -48,83 +68,93 @@
             </div>
             <div class="col-md-3">
               <div class="input-group input-group-static my-3">
-                <label>Product</label>
-                <select name="product_id" id="" class="form-control">
-                  <option disabled selected>Select Product</option>
-                  @foreach ($products as $product)
-                  <option value="{{$product->id}}" @if($product->id == Request::query('product_id')) selected @endif>{{$product->name}}</option>
-                  @endforeach
-                </select>
+                <label>Player</label>
+                <input type="text" class="form-control" id="player_name" name="player_name" value="{{Request::query('player_name')}}">
               </div>
             </div>
             <div class="col-md-3">
-              <button type="submit" class="btn btn-sm btn-primary mt-5" id="search">Search</button>
+              <button class="btn btn-sm btn-primary" id="search">Search</button>
             </div>
+            
         </form>
       </div>
     </div>
-     
-      
-      <div class="table-responsive">
-        <table class="table table-flush" id="users-search">
-          <thead class="thead-light">
-            <th>PlayerName</th>
-            <th>Product</th>
-            <th>GameType</th>
-            <th>Total Bet</th>
-            <th>Total Valid</th>
-            <th>Win/Lose</th>
-            <th>Action</th>
-          </thead>
-          <tbody>\
-            {{-- kzt --}}
-            @if(isset($report))
-            @if(count($report)>0)
-            @foreach ($report as $res)
-              <tr>
-                <td>{{$res->user_name}}</td>
-                <td>{{$res->product_name}}</td>
-                <td>{{$res->game_type_name}}</td>
-                <td>{{ $res->total_bet_amount}}</td>
-                <td>{{ $res->total_valid_amount}}</td>
-                @if($res->total_transaction_amount > 0)
-                    <td class="text-sm text-success font-weight-bold">{{$res->total_transaction_amount}}</td>
-                    @else
-                    <td class="text-sm text-danger font-weight-bold">{{$res->total_transaction_amount}}</td>
-                    @endif
-                    <td>                <td>
-                <a href="{{route('admin.report.detail',
-                    ['user_id' => $res->user_id , 'product_id' => $res->product_id , 'game_type_id' => $res->game_type_id])}}" data-bs-toggle="tooltip" data-bs-original-title="Win/Lose Detail" class="btn btn-info btn-sm">
-                  <i class="fas fa-right-left text-white me-1"></i>
-                  Detail
-                </a>
-                </td>
-              </tr>
-            @endforeach
+    <div class="table-responsive">
+      <table class="table table-flush" id="users-search">
+        <thead class="thead-light bg-gradient-info">
+            <th class="text-white">PlayerId</th>
+            <th class="text-white">Product Name</th>
+            <th class="text-white">Total Valid Bet</th>
+            <th class="text-white">Total Bet</th>
+            <th class="text-white">Total Payout</th>
+            <th class="text-white">Win/Lose</th>
+            <th class="text-white">Action</th>
+        </thead>
+        <tbody>
+          @foreach ($reports as $rep)
+          <tr>
+            <td>{{ $rep->user_name}}</td>
+            <td>{{ $rep->product_name}}</td>
+            <td>{{ $rep->total_valid_bet_amount}}</td>
+            <td>{{ $rep->total_bet_amount}}</td>
+            <td>{{ $rep->total_payout_amount}}</td>
+            @php
+              $result = $rep->total_payout_amount - $rep->total_valid_bet_amount;
+            @endphp
+            @if($result > 0)
+            <td class="text-sm text-success font-weight-bold">{{$result}}</td>
             @else
-            <tr>
-              <td col-span=8>
-                There was no Agents.
-              </td>
-            </tr>
+            <td class="text-sm text-danger font-weight-bold">{{$result}}</td>
             @endif
-            @endif
-          </tbody>
-        </table>
-      </div>
+            <td><a href="{{route('admin.report.detail',[$rep->user_id,$rep->product_code])}}" class="btn btn-sm btn-info">Detail</a></td>
+          </tr>
+          @endforeachπ
+        </tbody>
+      </table>
     </div>
   </div>
-  </div>
+</div>
 </div>
 @endsection
 @section('scripts')
 <script src="{{ asset('admin_app/assets/js/plugins/datatables.js') }}"></script>
-{{-- <script>
-    const dataTableSearch = new simpleDatatables.DataTable("#datatable-search", {
-      searchable: true,
-      fixedHeight: true
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(document).on('click', '#search', function(event) {
+      event.preventDefault();
+      const fromDate = $('#fromDate').val();
+      const toDate = $('#toDate').val();
+      const playerName = $('#player_name').val();
+      const gameTypeId = $('.game-type-btn.active').data('id');
+      $('.game-type-btn').removeClass('btn_primary');
+      $('.game-type-btn[data-id="' + gameTypeId + '"]').addClass('btn_primary');
+      $.ajax({
+        url: "{{ route('admin.report.index') }}",
+        type: "GET",
+        data: {
+          fromDate: fromDate,
+          toDate: toDate,
+          playerName: playerName,
+          gameTypeId: gameTypeId,
+        },
+        success: function(response) {
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        },
+      });
     });
-  </script> --}}
+
+    $('.game-type-btn').on('click', function() {
+      $('.game-type-btn').removeClass('btn-primary');
+      $(this).addClass('btn-primary active');
+      var gameTypeId = $(this).data('id');
+    });
+
+  });
+</script>
 <script>
   if (document.getElementById('users-search')) {
     const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
