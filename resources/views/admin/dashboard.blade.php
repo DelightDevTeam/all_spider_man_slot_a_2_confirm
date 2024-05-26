@@ -12,7 +12,7 @@
                     <h4 class="mb-0">{{ number_format(auth()->user()->balanceFloat) }}</h4>
                 </div>
             </div>
-        @endif --}}
+       
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body p-3 position-relative">
