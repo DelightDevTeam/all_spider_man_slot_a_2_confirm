@@ -13,6 +13,7 @@ class TransactionController extends Controller
     use HttpResponses;
 
     public function index(Request $request){
+        
         $type = $request->get("type");
 
         [$from, $to] = match ($type) {
