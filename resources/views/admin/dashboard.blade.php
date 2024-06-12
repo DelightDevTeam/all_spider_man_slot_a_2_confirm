@@ -59,7 +59,7 @@
 <div class="row gx-4 mt-4">
     <div class="col-md-6">
         <div class="card">
-            <form action="{{ route('admin.balanceUp') }}" method="post">
+            {{-- <form action="{{ route('admin.balanceUp') }}" method="post">
                 @csrf
                 <div class="card-header p-3 pb-0">
                     <h6 class="mb-1">Update Balance</h6>
@@ -75,7 +75,7 @@
 
                     <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
                 </div>
-            </form>
+            </form> --}}
         </div>
     </div>
 </div>
