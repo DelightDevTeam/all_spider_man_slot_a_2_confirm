@@ -44,6 +44,22 @@ class GameTypeTableSeeder extends Seeder
                 'order' => '4',
                 'status' => 1,
                 'img'  => 'fishing.png'
+            ], 
+            [
+                'name' => 'Fishing1',
+                'name_mm' => 'ငါးဖမ်းခြင်း',
+                'code' => '11',
+                'order' => '5',
+                'status' => 0,
+                'img'  => 'fishing.png'
+            ],
+            [
+                'name' => 'Fishing2',
+                'name_mm' => 'ငါးဖမ်းခြင်း',
+                'code' => '12',
+                'order' => '6',
+                'status' => 0,
+                'img'  => 'fishing.png'
             ]
         ];
 
