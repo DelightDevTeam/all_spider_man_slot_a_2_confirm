@@ -18,37 +18,80 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     use HttpResponses;
+    // public function login(LoginRequest $request)
+    // {
+    //     $credentials = $request->only('user_name', 'password');
+
+    //     $user = User::where('user_name', $request->user_name)->first();
+
+    //     if (!$user || !Hash::check($request->password, $user->password)) {
+    //         return $this->error("", "Credentail does not match!", 401);
+    //     }
+
+    //     if ($user->is_changed_password == 0) {
+    //         return $this->error($user, "You have to change password", 200);
+    //     }
+
+    //     if (!Auth::attempt($credentials)) {
+    //         return $this->error("", "Credentials do not match!", 401);
+    //     }
+
+    //     $user = User::where('user_name', $request->user_name)->first();
+    //     if (!$user->hasRole('Player')) {
+    //         return $this->error("", "You are not a player!", 401);
+    //     }
+
+    //     UserLog::create([
+    //         'ip_address' => $request->ip(),
+    //         'user_id' => $user->id,
+    //         'user_agent' => $request->userAgent()
+    //     ]);
+
+    //     return $this->success(new UserResource($user), 'User login successfully.');
+    // }
     public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('user_name', 'password');
+{
+    $credentials = $request->only('user_name', 'password');
 
-        $user = User::where('user_name', $request->user_name)->first();
+    // Check if the user exists with the provided user_name
+    $user = User::where('user_name', $request->user_name)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return $this->error("", "Credentail does not match!", 401);
-        }
-
-        if ($user->is_changed_password == 0) {
-            return $this->error($user, "You have to change password", 200);
-        }
-
-        if (!Auth::attempt($credentials)) {
-            return $this->error("", "Credentials do not match!", 401);
-        }
-
-        $user = User::where('user_name', $request->user_name)->first();
-        if (!$user->hasRole('Player')) {
-            return $this->error("", "You are not a player!", 401);
-        }
-
-        UserLog::create([
-            'ip_address' => $request->ip(),
-            'user_id' => $user->id,
-            'user_agent' => $request->userAgent()
-        ]);
-
-        return $this->success(new UserResource($user), 'User login successfully.');
+    // If user not found or password doesn't match, return error
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return $this->error("", "Credentials do not match!", 401);
     }
+
+    // Check if the user's status is '0', which means banned
+    if ($user->status == 0) {
+        return $this->error("", "You are banned. Please contact the administrator.", 403); // Forbidden
+    }
+
+    // Check if the user needs to change their password
+    if ($user->is_changed_password == 0) {
+        return $this->error($user, "You have to change your password.", 200);
+    }
+
+    // Attempt to authenticate using the credentials
+    if (!Auth::attempt($credentials)) {
+        return $this->error("", "Credentials do not match!", 401);
+    }
+
+    // Check if the authenticated user is a player
+    $user = User::where('user_name', $request->user_name)->first();
+    if (!$user->hasRole('Player')) {
+        return $this->error("", "You are not a player!", 401);
+    }
+
+    // Log the user's login activity
+    UserLog::create([
+        'ip_address' => $request->ip(),
+        'user_id' => $user->id,
+        'user_agent' => $request->userAgent()
+    ]);
+
+    return $this->success(new UserResource($user), 'User logged in successfully.');
+}
+
 
     public function logout()
     {
