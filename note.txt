@@ -1,3 +1,31 @@
 // to remove laravel log
-php -r "file_put_contents('/var/www/html/shwe_dragon_slot_a/storage/logs/laravel.log', '');"
+php -r "file_put_contents('/var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log', '');"
 // created dev branch for kzt
+
+* * * * * cd /var/www/html/all_spider_man_slot_a_2_confirm && php artisan schedule:run >> /dev/null 2>&1
+
+tail -f /var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log
+
+# Set permissions for the storage and cache directories
+sudo chmod -R 775 /var/www/html/all_spider_man_slot_a_2_confirm/storage
+sudo chmod -R 775 /var/www/html/all_spider_man_slot_a_2_confirm/bootstrap/cache
+# Set ownership to the web server user
+sudo chown -R www-data:www-data /var/www/html/all_spider_man_slot_a_2_confirm/storage
+sudo chown -R www-data:www-data /var/www/html/all_spider_man_slot_a_2_confirm/bootstrap/cache
+
+spiderman168.online
+
+# Clear Laravel application cache
+php /var/www/html/all_spider_man_slot_a_2_confirm/artisan cache:clear
+
+# Clear view cache
+php /var/www/html/all_spider_man_slot_a_2_confirm/artisan view:clear
+
+# Clear route cache
+php /var/www/html/all_spider_man_slot_a_2_confirm/artisan route:clear
+
+# Clear config cache
+php /var/www/html/all_spider_man_slot_a_2_confirm/artisan config:clear
+
+# Clear logs (optional)
+sudo truncate -s 0 /var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log
