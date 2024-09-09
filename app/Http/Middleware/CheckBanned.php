@@ -28,7 +28,7 @@ class CheckBanned
     // Ensure the authenticated user is an agent and banned (status == 0)
     if (Auth::check() && Auth::user()->status == 2) {
         Auth::logout();
-        return redirect()->route('admin.login')->with('error', 'You are banned. Please contact the administrator.');
+        return redirect()->route('showLogin')->with('error', 'You are banned. Please contact the administrator.');
     }
 
     return $next($request);
