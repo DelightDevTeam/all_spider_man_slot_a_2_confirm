@@ -43,6 +43,20 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+              @endif
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
