@@ -63,7 +63,7 @@ class AuthController extends Controller
 
     // Check if the user's status is '0', which means banned
     if ($user->status == 0) {
-        return $this->error("", "You are banned. Please contact the administrator.", 403); // Forbidden
+        return $this->error("", "You are banned. Please contact the administrator.", 401); // Forbidden
     }
     // if ($user->status == 0) {
     //     return response()->json([
