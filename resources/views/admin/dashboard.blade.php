@@ -62,23 +62,23 @@
     <div class="row gx-4 mt-4">
         <div class="col-md-6">
             <div class="card">
-                <form action="{{ route('admin.balanceUp') }}" method="post">
-                    @csrf
-                    <div class="card-header p-3 pb-0">
-                        <h6 class="mb-1">Update Balance</h6>
-                        <p class="text-sm mb-0">
-                            Owner can update balance.
-                        </p>
+                {{-- <form action="{{ route('admin.balanceUp') }}" method="post">
+                @csrf
+                <div class="card-header p-3 pb-0">
+                    <h6 class="mb-1">Update Balance</h6>
+                    <p class="text-sm mb-0">
+                        Owner can update balance.
+                    </p>
+                </div>
+                <div class="card-body p-3">
+                    <div class="input-group input-group-static my-4">
+                        <label>Amount</label>
+                        <input type="integer" class="form-control" name="balance">
                     </div>
-                    <div class="card-body p-3">
-                        <div class="input-group input-group-static my-4">
-                            <label>Amount</label>
-                            <input type="integer" class="form-control" name="balance">
-                        </div>
 
-                        <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
-                    </div>
-                </form>
+                    <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
+                </div>
+            </form> --}}
             </div>
         </div>
     </div>
