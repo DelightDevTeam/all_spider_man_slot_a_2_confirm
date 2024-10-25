@@ -6,6 +6,25 @@ php -r "file_put_contents('/var/www/html/all_spider_man_slot_a_2_confirm/storage
 
 tail -f /var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log
 
+tail -f /var/log/mysql/error.log
+SHOW VARIABLES LIKE 'innodb_lock_wait_timeout';
+SHOW VARIABLES LIKE 'innodb_print_all_deadlocks';
+[mysqld]
+innodb_buffer_pool_size = 5000M  # 5 GB for InnoDB buffer pool
+query_cache_size = 0             # Disable query cache for performance
+query_cache_type = 0             # Disable query cache
+tmp_table_size = 64M             # Max memory for temporary tables
+max_heap_table_size = 64M        # Max memory for heap tables
+SHOW STATUS LIKE 'Innodb_buffer_pool_bytes_data';
+sudo tail -n 50 /var/log/mysql/error.log
+SHOW PROCESSLIST;
+
+
+SHOW INDEX FROM reports;
+SHOW INDEX FROM seamless_transactions;
+
+
+
 # Set permissions for the storage and cache directories
 sudo chmod -R 775 /var/www/html/all_spider_man_slot_a_2_confirm/storage
 sudo chmod -R 775 /var/www/html/all_spider_man_slot_a_2_confirm/bootstrap/cache

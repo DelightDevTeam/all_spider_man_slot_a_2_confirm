@@ -88,7 +88,9 @@ class PullReport extends Command
                             'status' => $report['Status'],
                             'created_on' => $report['CreatedOn'],
                             'modified_on' => $report['ModifiedOn'],
-                            'settlement_date' => $report['SettlementDate']
+                            //'settlement_date' => $report['SettlementDate']
+                            'settlement_date' => $report['SettlementDate'] ?? now(),
+
                         ]);
                     }else{
                         Report::create([
@@ -107,8 +109,10 @@ class PullReport extends Command
                             'status' => $report['Status'],
                             'created_on' => $report['CreatedOn'],
                             'modified_on' => $report['ModifiedOn'],
-                            'settlement_date' => $report['SettlementDate']
-                        ]); 
+                            //'settlement_date' => $report['SettlementDate']
+                            'settlement_date' => $report['SettlementDate'] ?? now(),
+
+                        ]);
                     }
                 }
             }
