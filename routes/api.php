@@ -24,12 +24,14 @@ use App\Http\Controllers\Api\V1\Player\TransactionController;
 use App\Http\Controllers\Api\V1\Player\WagerController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\Api\V1\NewVersion\PlaceBetNewVersionController;
+
 
 //login route post
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 
-// logout 
+// logout
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
@@ -50,7 +52,8 @@ Route::group(["prefix" => "Seamless"], function () {
     Route::post('GetGameList', [LaunchGameController::class, 'getGameList']);
     Route::post('GameResult', [GameResultController::class, 'gameResult']);
     Route::post('Rollback', [RollbackController::class, 'rollback']);
-    Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
+    //Route::post('PlaceBet', [PlaceBetController::class, 'placeBet']);
+    Route::post('PlaceBet', [PlaceBetNewVersionController::class, 'placeBetNew']);
     Route::post('CancelBet', [CancelBetController::class, 'cancelBet']);
     Route::post('BuyIn', [BuyInController::class, 'buyIn']);
     Route::post('BuyOut', [BuyOutController::class, 'buyOut']);
