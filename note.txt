@@ -22,6 +22,8 @@ SHOW PROCESSLIST;
 
 SHOW INDEX FROM reports;
 SHOW INDEX FROM seamless_transactions;
+CREATE INDEX idx_wager_id ON reports (wager_id);
+CREATE INDEX idx_seamless_transaction_id ON seamless_transactions (seamless_transaction_id);
 
 
 

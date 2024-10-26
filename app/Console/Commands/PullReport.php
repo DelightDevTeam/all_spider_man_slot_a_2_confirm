@@ -57,7 +57,7 @@ class PullReport extends Command
             'Sign' => $signature,
             'RequestTime' => $requestTime,
         ];
-        Log::info($data);
+        //Log::info($data);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -67,7 +67,7 @@ class PullReport extends Command
             $data = $response->json();
             if ($data['Wagers'] != null) {
                 $data = $response['Wagers'];
-                Log::info($response);
+                //Log::info($response);
                 foreach ($data as $report) {
                     $wagerId = Report::where('wager_id', $report['WagerID'])->first();
 
