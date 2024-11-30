@@ -14,6 +14,7 @@ use App\Services\Slot\SlotWebhookValidator;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class JackPotController extends Controller
 {
@@ -36,6 +37,8 @@ class JackPotController extends Controller
             $seamless_transactions = $this->createWagerTransactions($validator->getRequestTransactions(), $event);
 
             foreach ($seamless_transactions as $seamless_transaction) {
+                Log::info($$seamless_transaction->transaction_amount);
+                
                 $this->processTransfer(
                     User::adminUser(),
                     $request->getMember(),
