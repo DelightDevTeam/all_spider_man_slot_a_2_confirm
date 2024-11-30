@@ -67,10 +67,12 @@ class NewBonusController extends Controller
         $before_balance = $request->getMember()->balanceFloat;
 
         DB::beginTransaction();
+            $event = $this->createEvent($request);
+
 
         try {
             // Create an event for the bonus transactions
-            $event = $this->createEvent($request);
+            //$event = $this->createEvent($request);
 
             // Process the transactions and create wagers
             $seamless_transactions = $this->createWagerTransactions($transactions, $event);
