@@ -14,6 +14,7 @@ use App\Services\Slot\SlotWebhookValidator;
 use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -39,6 +40,7 @@ class BonusController extends Controller
 
             foreach ($seamless_transactions as $seamless_transaction) {
                 // TODO: ask: what if operator doesn't want to pay bonus
+                Log::info($seamless_transaction);
                 $this->processTransfer(
                     User::adminUser(),
                     $request->getMember(),

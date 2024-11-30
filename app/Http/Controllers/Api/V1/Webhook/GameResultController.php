@@ -48,6 +48,7 @@ class GameResultController extends Controller
                     $from = User::adminUser();
                     $to = $request->getMember();
                 }
+                Log::info($seamless_transaction->transaction_amount);
                 $this->processTransfer(
                     $from,
                     $to,
