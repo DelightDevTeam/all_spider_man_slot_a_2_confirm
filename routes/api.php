@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\V1\Player\WagerController;
 use App\Http\Controllers\Api\V1\Webhook\PlaceBetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Api\V1\NewVersion\PlaceBetNewVersionController;
+use App\Http\Controllers\Api\V1\NewVersion\NewBonusController;
 
 
 //login route post
@@ -58,7 +59,8 @@ Route::group(["prefix" => "Seamless"], function () {
     Route::post('BuyIn', [BuyInController::class, 'buyIn']);
     Route::post('BuyOut', [BuyOutController::class, 'buyOut']);
     Route::post('PushBet', [PushBetController::class, 'pushBet']);
-    Route::post('Bonus', [BonusController::class, 'bonus']);
+    //Route::post('Bonus', [BonusController::class, 'bonus']);
+    Route::post('Bonus', [NewBonusController::class, 'bonus']);
     Route::post('Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('MobileLogin', [MobileLoginController::class, 'MobileLogin']);
     // });
