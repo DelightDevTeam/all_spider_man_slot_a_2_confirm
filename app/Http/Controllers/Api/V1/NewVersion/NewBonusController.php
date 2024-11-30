@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Api\V1\NewVersion;
 
-use Illuminate\Http\Request;
-use App\Enums\SlotWebhookResponseCode;
-use App\Enums\TransactionName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\SlotWebhookRequest;
-use App\Models\User;
 use App\Services\Slot\SlotWebhookService;
-use Illuminate\Support\Facades\DB;
+use App\Enums\SlotWebhookResponseCode;
+use App\Enums\TransactionName;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Api\V1\Webhook\Traits\UseWebhook;
+use App\Models\User;
+
 
 class NewBonusController extends Controller
 {
+    use UseWebhook;
+
     public function bonus(SlotWebhookRequest $request)
     {
         $userId = $request->getMember()->id;
@@ -46,7 +49,6 @@ class NewBonusController extends Controller
         if ($validator->fails()) {
             // Release Redis lock and return validation error response
             Redis::del("wallet:lock:$userId");
-
             return $validator->getResponse();
         }
 
@@ -65,29 +67,20 @@ class NewBonusController extends Controller
         $before_balance = $request->getMember()->balanceFloat;
 
         DB::beginTransaction();
+
         try {
-            // Create and store the event in the database
+            // Create an event for the bonus transactions
             $event = $this->createEvent($request);
 
-            // Insert transactions for bonuses
+            // Process the transactions and create wagers
             $seamless_transactions = $this->createWagerTransactions($transactions, $event);
 
-            DB::commit(); // Commit the bonus transaction insertion
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Redis::del("wallet:lock:$userId");
-            Log::error('Error during bonus transaction processing', ['error' => $e]);
-
-            return response()->json(['message' => $e->getMessage()], 500);
-        }
-
-        try {
-            // Process transfers for each transaction
+            // Transfer bonuses to the player
             foreach ($seamless_transactions as $seamless_transaction) {
                 $this->processTransfer(
-                    User::adminUser(),
-                    $request->getMember(),
-                    TransactionName::Bonus,
+                    User::adminUser(),                     // From Admin/System wallet
+                    $request->getMember(),                 // To Player wallet
+                    TransactionName::Bonus,                // Transaction type: Bonus
                     $seamless_transaction->transaction_amount,
                     $seamless_transaction->rate,
                     [
@@ -98,14 +91,17 @@ class NewBonusController extends Controller
                 );
             }
 
-            // Refresh wallet balance after processing
+            DB::commit();
+
+            // Refresh the player's wallet balance
             $request->getMember()->wallet->refreshBalance();
             $after_balance = $request->getMember()->balanceFloat;
 
         } catch (\Exception $e) {
-            Log::error('Error during wallet transfer processing', ['error' => $e]);
+            DB::rollBack();
             Redis::del("wallet:lock:$userId");
 
+            Log::error('Error during bonus processing', ['error' => $e]);
             return response()->json(['message' => $e->getMessage()], 500);
         }
 
