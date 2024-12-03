@@ -11,12 +11,12 @@ use App\Enums\TransactionName;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Api\V1\Webhook\Traits\UseWebhook;
+use App\Http\Controllers\Api\V1\Webhook\Traits\BonusUseWebhook;
 use App\Models\User;
 
 class NewVersionBonusController extends Controller
 {
-    use UseWebhook;
+    use BonusUseWebhook;
 
     public function bonus(BonusRequest $request)
     {
