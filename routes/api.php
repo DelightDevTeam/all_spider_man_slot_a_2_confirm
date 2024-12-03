@@ -27,6 +27,8 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Api\V1\NewVersion\PlaceBetNewVersionController;
 use App\Http\Controllers\Api\V1\NewVersion\NewBonusController;
 use App\Http\Controllers\Api\V1\NewVersion\NewJackpotController;
+use App\Http\Controllers\Api\V1\NewVersion\NewVersionBonusController;
+
 
 
 //login route post
@@ -60,8 +62,8 @@ Route::group(["prefix" => "Seamless"], function () {
     Route::post('BuyIn', [BuyInController::class, 'buyIn']);
     Route::post('BuyOut', [BuyOutController::class, 'buyOut']);
     Route::post('PushBet', [PushBetController::class, 'pushBet']);
-    //Route::post('Bonus', [BonusController::class, 'bonus']);
-    Route::post('Bonus', [NewBonusController::class, 'bonus']);
+    Route::post('Bonus', [NewVersionBonusController::class, 'bonus']);
+    //Route::post('Bonus', [NewBonusController::class, 'bonus']);
     //Route::post('Jackpot', [JackPotController::class, 'jackPot']);
     Route::post('Jackpot', [NewJackpotController::class, 'jackPot']);
 
