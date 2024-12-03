@@ -92,7 +92,7 @@ class NewBonusController extends Controller
                     ]
                 );
             }
-
+            Log::info('Bonuss Successful');
             DB::commit();
 
             // Refresh the player's wallet balance
