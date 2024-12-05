@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Redis;
 use App\Models\Admin\GameType;
 use App\Models\Admin\GameTypeProduct;
 use App\Models\Admin\Product;
+use App\Http\Controllers\Api\V1\Webhook\Traits\OptimizedBettingProcess;
+
 
 class PlaceBetNewVersionController extends Controller
 {
-    use NewVersionOptimizedBettingProcess;
+    //use NewVersionOptimizedBettingProcess;
+    use OptimizedBettingProcess;
 
     public function placeBetNew(SlotWebhookRequest $request)
 {
