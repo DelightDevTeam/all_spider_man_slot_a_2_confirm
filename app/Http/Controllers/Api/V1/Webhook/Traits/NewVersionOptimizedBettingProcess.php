@@ -30,6 +30,9 @@ trait NewVersionOptimizedBettingProcess
             return response()->json(['message' => 'The wallet is currently being updated. Please try again later.'], 409);
         }
 
+            $event = $this->createEvent($request);
+
+
         DB::beginTransaction();
         try {
             // Validate the request
@@ -43,7 +46,7 @@ trait NewVersionOptimizedBettingProcess
             $before_balance = $request->getMember()->balanceFloat;
 
             // Create and store the event in the database
-            $event = $this->createEvent($request);
+            //$event = $this->createEvent($request);
 
             // Retry logic for creating wager transactions with exponential backoff
             $seamless_transactions = $this->retryOnDeadlock(function () use ($validator, $event) {
@@ -118,7 +121,7 @@ trait NewVersionOptimizedBettingProcess
         $seamlessEventId = $event->id; // Get the ID of the SeamlessEvent
 
         // Log the start of the transaction processing
-        Log::debug("Starting createWagerTransactions for user ID: $userId, event ID: $seamlessEventId");
+       // Log::debug("Starting createWagerTransactions for user ID: $userId, event ID: $seamlessEventId");
 
         // Retry logic for deadlock handling
         do {
@@ -129,13 +132,13 @@ trait NewVersionOptimizedBettingProcess
                     $seamlessTransactionsData = [];
 
                     // Log batch size being processed
-                    Log::debug('Processing bet batch of size: '.count($betBatch));
+                    //Log::debug('Processing bet batch of size: '.count($betBatch));
 
                     // Loop through each bet in the batch
                     foreach ($betBatch as $transaction) {
 
                         // Log transaction details
-                        Log::debug('Processing transaction', ['transaction' => $transaction]);
+                        //Log::debug('Processing transaction', ['transaction' => $transaction]);
 
                         // If transaction is an instance of the RequestTransaction object, extract the data
                         if ($transaction instanceof \App\Services\Slot\Dto\RequestTransaction) {
@@ -143,7 +146,7 @@ trait NewVersionOptimizedBettingProcess
                             // Attempt to retrieve the ActualGameTypeID from the database based on GameType
                             $gameType = GameType::where('code', $transaction->GameType)->first();
                             if ($gameType) {
-                                $transaction->ActualGameTypeID = $gameType->id;
+                                $transaction->GameType = $gameType->id;
                             } else {
                                 throw new \Exception('Invalid GameType: '.$transaction->GameType);
                             }
@@ -151,7 +154,7 @@ trait NewVersionOptimizedBettingProcess
                             // Attempt to retrieve the ActualProductID from the database based on ProductID
                             $product = Product::where('code', $transaction->ProductID)->first();
                             if ($product) {
-                                $transaction->ActualProductID = $product->id;
+                                $transaction->ProductID = $product->id;
                             } else {
                                 throw new \Exception('Invalid ProductID: '.$transaction->ProductID);
                             }
@@ -179,8 +182,8 @@ trait NewVersionOptimizedBettingProcess
                                 'PayoutAmount' => $transaction->PayoutAmount,
                                 'ValidBetAmount' => $transaction->ValidBetAmount,
                                 'Rate' => $rate,  // Use the fetched rate
-                                'ActualGameTypeID' => $transaction->ActualGameTypeID,
-                                'ActualProductID' => $transaction->ActualProductID,
+                                'ActualGameTypeID' => $transaction->GameType,
+                                'ActualProductID' => $transaction->ProductID,
                             ];
 
                         } else {
@@ -206,8 +209,8 @@ trait NewVersionOptimizedBettingProcess
                         $seamlessTransactionsData[] = [
                             'user_id' => $userId,  // Use user_id from the SeamlessEvent
                             'wager_id' => $existingWager ? $existingWager->id : null,
-                            'game_type_id' => $transactionData['ActualGameTypeID'],
-                            'product_id' => $transactionData['ActualProductID'],
+                            'game_type_id' => $transactionData['GameType'],
+                            'product_id' => $transactionData['ProductID'],
                             'seamless_transaction_id' => $transactionData['TransactionID'],
                             'rate' => $transactionData['Rate'],
                             'transaction_amount' => $transactionData['TransactionAmount'],
