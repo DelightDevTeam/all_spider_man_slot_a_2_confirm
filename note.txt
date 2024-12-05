@@ -50,3 +50,13 @@ php /var/www/html/all_spider_man_slot_a_2_confirm/artisan config:clear
 
 # Clear logs (optional)
 sudo truncate -s 0 /var/www/html/all_spider_man_slot_a_2_confirm/storage/logs/laravel.log
+
+
+# check network
+sudo apt install net-tools
+sudo netstat -tuln
+--
+sudo ip link set dev eth0 down
+sudo ip link set dev eth0 up
+sudo ip link set dev eth1 down
+sudo ip link set dev eth1 up
