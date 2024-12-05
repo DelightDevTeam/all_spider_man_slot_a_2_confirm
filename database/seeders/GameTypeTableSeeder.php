@@ -44,9 +44,9 @@ class GameTypeTableSeeder extends Seeder
                 'order' => '4',
                 'status' => 1,
                 'img'  => 'fishing.png'
-            ], 
+            ],
             [
-                'name' => 'Fishing1',
+                'name' => 'Bonus',
                 'name_mm' => 'ငါးဖမ်းခြင်း',
                 'code' => '11',
                 'order' => '5',
@@ -54,7 +54,7 @@ class GameTypeTableSeeder extends Seeder
                 'img'  => 'fishing.png'
             ],
             [
-                'name' => 'Fishing2',
+                'name' => 'Jackpot',
                 'name_mm' => 'ငါးဖမ်းခြင်း',
                 'code' => '12',
                 'order' => '6',
