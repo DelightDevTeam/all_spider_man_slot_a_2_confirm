@@ -168,7 +168,7 @@ trait NewVersionOptimizedBettingProcess
                             }
 
                             // Ensure rate is a valid integer, and provide a fallback if missing
-                            $rate = (int) ($game_type_product->rate ?? 1);  // Cast rate to int with fallback value
+                            //$rate = (int) ($game_type_product->rate ?? 1);  // Cast rate to int with fallback value
 
                             // Build transaction data
                             $transactionData = [
@@ -181,9 +181,9 @@ trait NewVersionOptimizedBettingProcess
                                 'TransactionAmount' => $transaction->TransactionAmount,
                                 'PayoutAmount' => $transaction->PayoutAmount,
                                 'ValidBetAmount' => $transaction->ValidBetAmount,
-                                'Rate' => $rate,  // Use the fetched rate
-                                'ActualGameTypeID' => $transaction->GameType,
-                                'ActualProductID' => $transaction->ProductID,
+                                //'Rate' => $rate,  // Use the fetched rate
+                                //'ActualGameTypeID' => $transaction->GameType,
+                                //'ActualProductID' => $transaction->ProductID,
                             ];
 
                         } else {
@@ -205,6 +205,9 @@ trait NewVersionOptimizedBettingProcess
                             ];
                         }
 
+                            $rate = (int) ($game_type_product->rate ?? 1);  // Cast rate to int with fallback value
+
+
                         // Collect seamless transaction data for batch insert
                         $seamlessTransactionsData[] = [
                             'user_id' => $userId,  // Use user_id from the SeamlessEvent
@@ -212,7 +215,8 @@ trait NewVersionOptimizedBettingProcess
                             'game_type_id' => $transactionData['GameType'],
                             'product_id' => $transactionData['ProductID'],
                             'seamless_transaction_id' => $transactionData['TransactionID'],
-                            'rate' => $transactionData['Rate'],
+                            //'rate' => $transactionData['Rate'],
+                            'rate' => $rate,
                             'transaction_amount' => $transactionData['TransactionAmount'],
                             'bet_amount' => $transactionData['BetAmount'],
                             'valid_amount' => $transactionData['ValidBetAmount'],
