@@ -30,6 +30,8 @@ trait OptimizedBettingProcess
             return response()->json(['message' => 'The wallet is currently being updated. Please try again later.'], 409);
         }
 
+        $event = $this->createEvent($request);
+
         DB::beginTransaction();
         try {
             // Validate the request
@@ -40,7 +42,7 @@ trait OptimizedBettingProcess
             }
 
             $beforeBalance = $request->getMember()->balanceFloat;
-            $event = $this->createEvent($request);
+            //$event = $this->createEvent($request);
 
             // Insert bets in chunks for better performance
             $this->insertBets($validator->getRequestTransactions(), $event);
